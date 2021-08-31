@@ -12,7 +12,7 @@
       //creating scene
       var scene = new THREE.Scene();
       scene.background = new THREE.Color(0x2a3b4c);
-      scene.fog = new THREE.Fog(0x000000, 0.1, 8);
+      scene.fog = new THREE.Fog(0x000000, 0.5, 15);
       //add camera
       var camera = new THREE.PerspectiveCamera(
         75,
@@ -25,15 +25,73 @@
       document.body.appendChild(renderer.domElement);
 
       //add geometry
-      var geometry = new THREE.BoxGeometry();
+      var geometry = new THREE.BoxGeometry(2,2,2);
       var material = new THREE.MeshBasicMaterial({
-        color: 0x00ff00
+        color: 0x00ff00,
+        wireframe:false
       });
-      var cube = new THREE.Mesh(geometry, material);
+      var object = new THREE.Mesh(geometry, material);
+       
+      scene.add(object);
 
-      scene.add(cube);
 
-      camera.position.z = 5;
+      
+    
+
+      var object = new THREE.Mesh(new THREE.CircleGeometry(1,100),material);
+      object.position.x = 5;
+      scene.add(object);
+
+      var object = new THREE.Mesh(new THREE.ConeGeometry(0.5,3,32,3,true),material);
+      object.position.x = -5;
+      scene.add(object);
+
+      var object = new THREE.Mesh(new THREE.CylinderGeometry(0.5,0.5,2,50,3),material);
+      object.position.y = 5;
+      scene.add(object);
+
+
+
+      var object = new THREE.Mesh(
+        new THREE.PlaneGeometry(2, 2, 3, 5),
+        material
+      );
+      object.position.y = -5;
+      scene.add(object);
+
+      var object = new THREE.Mesh(new THREE.TetrahedronGeometry(2), material);
+      object.position.x = -5;
+      object.position.y = 5;
+      scene.add(object);
+
+      var object = new THREE.Mesh(
+        new THREE.SphereGeometry(1.5, 32, 32),
+        material
+      );
+      object.position.x = 5;
+      object.position.y = 5;
+      scene.add(object);
+
+      var object = new THREE.Mesh(
+        new THREE.TorusGeometry(2, 1, 32, 32 ),
+        material
+      );
+      object.position.x = -5;
+      object.position.y = -5;
+      scene.add(object);
+
+      var object = new THREE.Mesh(
+        new THREE.RingGeometry(0.3, 1.5, 32, 5),
+        material
+      );
+      object.position.x = 5;
+      object.position.y = -5;
+      scene.add(object);
+
+
+      camera.position.z = 10;
+     
+
 
       var controls = new OrbitControls(camera, renderer.domElement);
       // distance of your scroll
@@ -54,12 +112,31 @@
       //free movement with right click
       controls.screenSpacePanning = true;
 
+      window.addEventListener('resize', redimensionar);
+
+      function redimensionar(){
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth , window.innerHeight);
+        renderer.render(scene,camera);
+      }
+
       //animation
       var animate = function () {
         requestAnimationFrame(animate);
 
-        //cube.rotation.x += 0.01;
-        //cube.rotation.y += 0.01;
+        scene.traverse(function(object){
+          if(object.isMesh ===true){
+          object.rotation.x += 0.01;
+          object.rotation.z += 0.01;
+          }
+        })
+
+       //cube.rotation.x += 0.01;
+       //cube.rotation.y += 0.01;
+
+       //circle.rotation.x -= 0.01;
+       //circle.rotation.y -= 0.01;
 
         renderer.render(scene, camera);
       };
@@ -68,3 +145,4 @@
     </script>
   </body>
 </html>
+
