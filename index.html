@@ -43,9 +43,20 @@
     
         scene.background = new THREE.Color(0xffffff)
        
-       var lights = new THREE.DirectionalLight(0xffffff,10)
+       
+        var lights = new THREE.DirectionalLight(0xffffff,6)
         lights.position.set(5,100,10)
+       
+        var lights2 = new THREE.DirectionalLight(0xffffff,2)
+        lights2.position.set(40,0,0)
+        var lights3 = new THREE.DirectionalLight(0xffffff,2)
+        lights3.position.set(5,-100,0)
+        var lights4 = new THREE.DirectionalLight(0xffffff,2)
+        lights4.position.set(-40,0,0)
          scene.add(lights);
+         scene.add(lights2);
+         scene.add(lights3);
+         scene.add(lights4);
          camera.position.set(0,0,5);
             
          var control = new OrbitControls(camera, renderer.domElement);
