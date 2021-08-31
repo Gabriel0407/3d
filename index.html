@@ -43,7 +43,8 @@
     
         scene.background = new THREE.Color(0xffffff)
        
-        var lights = new THREE.HemisphereLight(0xffffff, 0x000000,20)
+       var lights = new THREE.DirectionalLight(0xffffff,10)
+        lights.position.set(5,100,10)
          scene.add(lights);
          camera.position.set(0,0,5);
             
